@@ -8,6 +8,7 @@ on:
 
 env:
   CLOUD_RUN_PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+  CLOUD_RUN_SA_EMAIL: ${{ secrets.CLOUD_RUN_SA_EMAIL }}
   RENDERER_SERVICE_URL: ${{ secrets.RENDERER_SERVICE_URL }}
   CLOUD_RUN_REGION: asia-south1
   REPO_NAME: editorsvc
@@ -43,6 +44,9 @@ jobs:
         
     - name: Deploy
       run: |-
+        gcloud run services add-iam-policy-binding renderer \
+          --member serviceAccount:editor-identity@$CLOUD_RUN_SA_EMAIL \
+          --role roles/run.invoker     
         gcloud run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA --allow-unauthenticated \
           --service-account editor-identity \
           --project $CLOUD_RUN_PROJECT_ID \
