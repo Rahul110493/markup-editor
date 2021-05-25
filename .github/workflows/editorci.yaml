@@ -1,4 +1,4 @@
-name: render-cloud-run
+name: editor-cloud-run
 
 on:
   push:
@@ -8,8 +8,9 @@ on:
 
 env:
   CLOUD_RUN_PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+  RENDERER_SERVICE_URL: ${{ secrets.RENDERER_SERVICE_URL }}
   CLOUD_RUN_REGION: asia-south1
-  REPO_NAME: renderer
+  REPO_NAME: editorsvc
 
 jobs:
   build-and-deploy:
@@ -42,7 +43,7 @@ jobs:
         
     - name: Deploy
       run: |-
-      gcloud run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
+        gcloud run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
           --service-account editor-identity \
           --project $CLOUD_RUN_PROJECT_ID \
           --platform managed \
