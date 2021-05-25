@@ -46,6 +46,7 @@ jobs:
       run: |-
         gcloud run services add-iam-policy-binding renderer \
           --member serviceAccount:editor-identity@$CLOUD_RUN_SA_EMAIL \
+          --platform managed \
           --role roles/run.invoker     
         gcloud run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA --allow-unauthenticated \
           --service-account editor-identity \
