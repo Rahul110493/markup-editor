@@ -43,10 +43,9 @@ jobs:
         
     - name: Deploy
       run: |-
-        gcloud run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
+        gcloud run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA --allow-unauthenticated \
           --service-account editor-identity \
           --project $CLOUD_RUN_PROJECT_ID \
           --platform managed \
-          --region $CLOUD_RUN_REGION \
           --set-env-vars EDITOR_UPSTREAM_RENDER_URL=$RENDERER_SERVICE_URL \
-          --allow-unauthenticated
+          --region $CLOUD_RUN_REGION          
