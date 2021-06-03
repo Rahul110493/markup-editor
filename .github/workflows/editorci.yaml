@@ -46,7 +46,7 @@ jobs:
       run: |-
         gcloud components install beta --quiet   
         gcloud run services add-iam-policy-binding renderer \
-          --member serviceAccount:editor-identity@PROJECT_ID.iam.gserviceaccount.com \
+          --member serviceAccount:editor-identity \
           --role roles/run.invoker        
         gcloud beta run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA --allow-unauthenticated \
           --service-account editor-identity \
