@@ -46,9 +46,9 @@ jobs:
       run: |-
         gcloud components install beta --quiet  
         gcloud beta run services set-iam-policy renderer \
-          --member serviceAccount:editor-identity@nodejsapp-314207.iam.gserviceaccount.com \
-          --role roles/run.invoker \
-          --region $CLOUD_RUN_REGION
+          --member=serviceAccount:editor-identity@nodejsapp-314207.iam.gserviceaccount.com \
+          --role=roles/run.invoker \
+          --region=$CLOUD_RUN_REGION
         gcloud beta run deploy editor --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA --allow-unauthenticated \
           --service-account editor-identity \
           --project $CLOUD_RUN_PROJECT_ID \
