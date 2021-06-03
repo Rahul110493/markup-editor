@@ -45,7 +45,7 @@ jobs:
     - name: Deploy
       run: |-
         gcloud components install beta --quiet  
-        gcloud beta run services set-iam-policy renderer \
+        gcloud beta run services add-iam-policy-binding renderer \
           --member=serviceAccount:editor-identity@nodejsapp-314207.iam.gserviceaccount.com \
           --role=roles/run.invoker \
           --region=$CLOUD_RUN_REGION
