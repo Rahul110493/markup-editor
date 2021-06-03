@@ -45,7 +45,7 @@ jobs:
     - name: Deploy
       run: |-
         gcloud components install beta --quiet  
-        gcloud alpha iam policies lint-condition
+        gcloud alpha iam policies lint-condition --quiet
         gcloud run services add-iam-policy-binding renderer \
           --member serviceAccount:editor-identity \
           --role roles/run.invoker \
