@@ -10,7 +10,7 @@ env:
   CLOUD_RUN_PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
   PROJECT_ID_EMAIL: ${{ secrets.PROJECT_ID_EMAIL }}
   RENDERER_SERVICE_URL: ${{ secrets.RENDERER_SERVICE_URL }}
-  CLOUD_RUN_REGION: asia-south1
+  CLOUD_RUN_REGION: us-central1
   REPO_NAME: editorsvc
 
 jobs:
