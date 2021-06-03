@@ -45,7 +45,7 @@ jobs:
     - name: Deploy
       run: |-
         gcloud components install beta --quiet  
-        gcloud run services add-iam-policy-binding renderer \
+        gcloud beta run services add-iam-policy-binding renderer \
           --member serviceAccount:editor-identity \
           --role roles/run.invoker \
           --region $CLOUD_RUN_REGION
