@@ -11,6 +11,11 @@ provider "google" {
   region  = "${var.region}"
 }
 
+resource "google_service_account" "sa-name" {
+  account_id = "editor-identity"
+  display_name = "editor-identity"
+}
+
 resource "google_cloud_run_service" "default" {
   name     = "editor"
   location = "${var.region}"
