@@ -8,7 +8,7 @@ on:
       
 env:
   PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
-  GOOGLE_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT }}
+  GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA }}
   RENDERER_SERVICE_URL: ${{ secrets.RENDERER_SERVICE_URL }}
   REPO_NAME: editor
   RUN_REGION: europe-west1
@@ -26,7 +26,7 @@ jobs:
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
-        service_account_key: ${{ secrets.SERVICE_ACCOUNT }}  
+        service_account_key: ${{ secrets.GCP_SA }}  
         export_default_credentials: true
         project_id: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
         
