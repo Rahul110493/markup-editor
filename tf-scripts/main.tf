@@ -26,7 +26,11 @@ resource "google_cloud_run_service" "default" {
         image = "${var.docker_image}"
         ports {
           container_port = 80
-         }        
+         }  
+        env {
+          name = "EDITOR_UPSTREAM_RENDER_URL"
+          value = "${var.RENDERER_SERVICE_URL}"
+        }
       }
       service_account_name = "editor-identity@nodejsapp-314207.iam.gserviceaccount.com"
     }
