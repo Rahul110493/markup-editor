@@ -29,7 +29,7 @@ resource "google_cloud_run_service" "default" {
          }  
         env {
           name = "EDITOR_UPSTREAM_RENDER_URL"
-          value = "${var.RENDERER_SERVICE_URL}"
+          value = "${var.renderer_svc_url}"
         }
       }
       service_account_name = "editor-identity@nodejsapp-314207.iam.gserviceaccount.com"
