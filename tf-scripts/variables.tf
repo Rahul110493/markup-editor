@@ -16,8 +16,8 @@ variable "docker_image" {
   default = ""
 }
 
-variable "RENDERER_SERVICE_URL" {
-  description = "RENDERER_SERVICE_URL for Opt Out Application."
+variable "renderer_svc_url" {
+  description = "renderer_svc_url for Opt Out Application."
   type =string
   default = ""
 }
