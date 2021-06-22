@@ -1,3 +1,4 @@
 project_id = "nodejsapp-314207"
 region = "europe-west1"
 docker_image = ""
+renderer_svc_url = ""
