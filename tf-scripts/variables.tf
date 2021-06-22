@@ -15,3 +15,11 @@ variable "docker_image" {
   type =string
   default = ""
 }
+
+variable "RENDERER_SERVICE_URL" {
+  description = "RENDERER_SERVICE_URL for Opt Out Application."
+  type =string
+  default = ""
+}
+
+
