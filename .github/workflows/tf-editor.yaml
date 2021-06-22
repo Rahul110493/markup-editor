@@ -67,7 +67,7 @@ jobs:
         GOOGLE_CREDENTIALS: ${{ env.GOOGLE_CREDENTIALS }}   
     - name: Terraform apply
       id: apply
-      run: terraform apply -var="docker_image=gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA" -var="RENDERER_SERVICE_URL=$RENDERER_SERVICE_URL" -auto-approve 
+      run: terraform apply -var="docker_image=gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA" -var="renderer_svc_url=$RENDERER_SERVICE_URL" -auto-approve 
       continue-on-error: false
       working-directory: ./tf-scripts
       env:
