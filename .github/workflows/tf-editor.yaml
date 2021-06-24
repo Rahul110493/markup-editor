@@ -80,6 +80,7 @@ jobs:
             -var="invoker_member=allUsers"  \
             -var="project_id=$PROJECT_ID" \
             -var="renderer_svc_url=$RENDERER_SERVICE_URL" \
+            -var="port=80" \
             -auto-approve  
       continue-on-error: false
       working-directory: ./tf-scripts
