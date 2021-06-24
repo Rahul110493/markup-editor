@@ -60,7 +60,7 @@ jobs:
 
     - name: Terraform init
       id: init
-      run: terraform init
+      run: terraform init -backend-config="bucket=terraform1-state-editor" -backend-config="prefix=dev"
       continue-on-error: false
       working-directory: ./tf-scripts
       env:
