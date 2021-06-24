@@ -12,7 +12,7 @@ provider "google" {
 }
 
 resource "google_cloud_run_service" "default" {
-  name     = "editor"
+  name     = "${var.service_name}"
   location = "${var.region}"
 
   template {
@@ -27,7 +27,7 @@ resource "google_cloud_run_service" "default" {
           value = "${var.renderer_svc_url}"
         }
       }
-      service_account_name = "cloudrun-identity@nodejsapp-314207.iam.gserviceaccount.com"
+      service_account_name = "${var.cloudrun_sa}"
     }
   }
 }
@@ -36,7 +36,7 @@ data "google_iam_policy" "noauth" {
   binding {
     role = "roles/run.invoker"
     members = [
-      "allUsers",
+      "${var.cloudrun_sa}"
     ]
   }
 }
