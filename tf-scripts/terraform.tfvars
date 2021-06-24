@@ -1,5 +1,5 @@
 project_id = ""
-region = ""
+region = "europe-west1"
 docker_image = ""
 renderer_svc_url = ""
 service_name = "" 
