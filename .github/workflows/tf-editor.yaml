@@ -9,7 +9,6 @@ on:
 env:
   PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
   GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA }}
-  RENDERER_SERVICE_URL: ${{ secrets.RENDERER_SERVICE_URL }}
   REPO_NAME: editor
   RUN_REGION: europe-west1
   BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
@@ -34,6 +33,14 @@ jobs:
       run: |-
         if ! gsutil ls | grep gs://$BUCKET_NAME ;then gsutil mb -p $PROJECT_ID -l $RUN_REGION -b on gs://$BUCKET_NAME;fi   
         
+    - name: Create cloud run sa   
+      run: |-
+        if ! gcloud iam service-accounts list | grep cloudrun-identity ;then gcloud iam service-accounts create cloudrun-identity;fi 
+        
+    - name: Get Backend URL
+      run: |-
+        export RENDERER_SERVICE_URL=""
+        if gcloud run services list --platform managed | grep renderer | awk '{print $4}' ;then RENDERER_SERVICE_URL=$(gcloud run services list --platform managed | grep renderer | awk '{print $4}');fi           
     - name: Enable docker auth
       run: |-     
         gcloud --quiet auth configure-docker
