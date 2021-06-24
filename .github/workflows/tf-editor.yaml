@@ -73,7 +73,14 @@ jobs:
       run: |-
         export RENDERER_SERVICE_URL=""
         if gcloud run services list --platform managed | grep renderer | awk '{print $4}' ;then RENDERER_SERVICE_URL=$(gcloud run services list --platform managed | grep renderer | awk '{print $4}');fi 
-        terraform apply -var="docker_image=gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA" -var="renderer_svc_url=$RENDERER_SERVICE_URL" -auto-approve 
+        terraform apply \
+            -var="docker_image=gcr.io/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}:$GITHUB_SHA" \
+            -var="service_name=editor" \
+            -var="cloudrun_sa=cloudrun-identity@nodejsapp-314207.iam.gserviceaccount.com" \
+            -var="invoker_member=allUsers"  \
+            -var="project_id=$PROJECT_ID" \
+            -var="renderer_svc_url=$RENDERER_SERVICE_URL" \
+            -auto-approve  
       continue-on-error: false
       working-directory: ./tf-scripts
       env:
