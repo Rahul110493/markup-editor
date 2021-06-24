@@ -43,7 +43,7 @@ variable "invoker_member" {
 variable "port" {
   description = "port for Opt Out Application."
   type =number
-  default = ""
+  default = 80
 }
 
 
