@@ -40,7 +40,9 @@ jobs:
     - name: Get Backend URL
       run: |-
         export RENDERER_SERVICE_URL=""
-        if gcloud run services list --platform managed | grep renderer | awk '{print $4}' ;then RENDERER_SERVICE_URL=$(gcloud run services list --platform managed | grep renderer | awk '{print $4}');fi           
+        if gcloud run services list --platform managed | grep renderer | awk '{print $4}' ;then RENDERER_SERVICE_URL=$(gcloud run services list --platform managed | grep renderer | awk '{print $4}');fi  
+        echo testurl
+        echo $RENDERER_SERVICE_URL
     - name: Enable docker auth
       run: |-     
         gcloud --quiet auth configure-docker
