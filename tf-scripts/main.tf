@@ -11,11 +11,6 @@ provider "google" {
   region  = "${var.region}"
 }
 
-# resource "google_service_account" "sa-name" {
-#   account_id = "editor-identity"
-#   display_name = "editor-identity"
-# }
-
 resource "google_cloud_run_service" "default" {
   name     = "editor"
   location = "${var.region}"
@@ -32,7 +27,7 @@ resource "google_cloud_run_service" "default" {
           value = "${var.renderer_svc_url}"
         }
       }
-#       service_account_name = "editor-identity@nodejsapp-314207.iam.gserviceaccount.com"
+      service_account_name = "cloudrun-identity@nodejsapp-314207.iam.gserviceaccount.com"
     }
   }
 }
