@@ -60,26 +60,33 @@ jobs:
         GOOGLE_CREDENTIALS: ${{ env.GOOGLE_CREDENTIALS }}
     - name: Terraform Plan
       id: plan
-      run: terraform plan
+      run: |-
+        export RENDERER_SERVICE_URL=""
+        if gcloud run services list --platform managed | grep renderer | awk '{print $4}' ;then RENDERER_SERVICE_URL=$(gcloud run services list --platform managed | grep renderer | awk '{print $4}');fi
+         terraform plan \
+          -var="project_id=$PROJECT_ID" \
+          -var="region=$RUN_REGION" \
+          -var="service_name=$REPO_NAME" \
+          -var="docker_image=gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA" \
+          -var="port=80" \
+          -var="service_account_id=cloudrun-identity" \
+          -var="service_account_name=cloudrun-identity" \
+          -var="cloudrun_service_account=cloudrun-identity@$GCP_PROJECT_ID.iam.gserviceaccount.com" \
+          -var="invoker_member=allUsers" \
+          -var="vendor=gcp" \
+          -var="vendor_service=cloudrun" \
+          -var="env_key=renderer_svc_url" \
+          -var="env_value=$RENDERER_SERVICE_URL" \
+          -out=PLAN
       continue-on-error: false
       working-directory: ./tf-scripts
       env:
-        GOOGLE_CREDENTIALS: ${{ env.GOOGLE_CREDENTIALS }}   
+        GOOGLE_CREDENTIALS: ${{ env.GOOGLE_CREDENTIALS }}
     - name: Terraform apply
       id: apply
       run: |-
-        export RENDERER_SERVICE_URL=""
-        if gcloud run services list --platform managed | grep renderer | awk '{print $4}' ;then RENDERER_SERVICE_URL=$(gcloud run services list --platform managed | grep renderer | awk '{print $4}');fi 
-        terraform apply \
-            -var="docker_image=gcr.io/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}:$GITHUB_SHA" \
-            -var="service_name=editor" \
-            -var="cloudrun_sa=cloudrun-identity@nodejsapp-314207.iam.gserviceaccount.com" \
-            -var="invoker_member=allUsers"  \
-            -var="project_id=$PROJECT_ID" \
-            -var="renderer_svc_url=$RENDERER_SERVICE_URL" \
-            -var="port=80" \
-            -auto-approve  
+        terraform apply PLAN
       continue-on-error: false
       working-directory: ./tf-scripts
       env:
-        GOOGLE_CREDENTIALS: ${{ env.GOOGLE_CREDENTIALS}} 
+        GOOGLE_CREDENTIALS: ${{ env.GOOGLE_CREDENTIALS}}
