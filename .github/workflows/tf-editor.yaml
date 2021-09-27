@@ -69,8 +69,6 @@ jobs:
           -var="service_name=$REPO_NAME" \
           -var="docker_image=gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA" \
           -var="port=80" \
-          -var="service_account_id=cloudrun-identity" \
-          -var="service_account_name=cloudrun-identity" \
           -var="cloudrun_service_account=cloudrun-identity@PROJECT_ID.iam.gserviceaccount.com" \
           -var="invoker_member=allUsers" \
           -var="vendor=gcp" \
