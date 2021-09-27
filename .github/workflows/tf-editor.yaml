@@ -71,7 +71,9 @@ jobs:
           -var="port=80" \
           -var="create_sa=false" \
           -var='gcp_service_list=["iam.googleapis.com","dataflow.googleapis.com","run.googleapis.com"]' \
-          -var="cloudrun_service_account=cloudrun-identity@$PROJECT_ID.iam.gserviceaccount.com" \
+          -var="service_account_id=editor-identity" \
+          -var="service_account_name=editor-identity" \
+          -var="cloudrun_service_account=editor-identity@$PROJECT_ID.iam.gserviceaccount.com" \
           -var="invoker_member=allUsers" \
           -var="vendor=gcp" \
           -var="vendor_service=cloudrun" \
