@@ -75,7 +75,7 @@ jobs:
           -var="invoker_member=allUsers" \
           -var="vendor=gcp" \
           -var="vendor_service=cloudrun" \
-          -var="env_key=renderer_svc_url" \
+          -var="env_key=EDITOR_UPSTREAM_RENDER_URL" \
           -var="env_value=$RENDERER_SERVICE_URL" \
           -out=PLAN
       continue-on-error: false
