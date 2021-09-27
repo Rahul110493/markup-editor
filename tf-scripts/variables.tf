@@ -120,6 +120,12 @@ variable "vendor_service" {
   default     = ""
 }
 
+variable "create_sa" {
+  description = "create service account for cloud"
+  type        = boolean
+  default     = true
+}
+
 variable "env_key" {
   description = "environment variable key for cloud run Application."
   type =string
