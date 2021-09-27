@@ -30,8 +30,13 @@ jobs:
         
     - name: Create tf state bucket    
       run: |-
-        if ! gsutil ls | grep gs://$BUCKET_NAME ;then gsutil mb -p $PROJECT_ID -l $RUN_REGION -b on gs://$BUCKET_NAME;fi   
-                
+        if ! gsutil ls | grep gs://$BUCKET_NAME ;then gsutil mb -p $PROJECT_ID -l $RUN_REGION -b on gs://$BUCKET_NAME;fi
+
+    - name: Create SA Check
+      run: |-
+         echo "CREATE_SA=false" >> $GITHUB_ENV
+         if ! gcloud iam service-accounts list | grep cloudrun-identity ;then echo "CREATE_SA=true" >> $GITHUB_ENV;fi  
+      
     - name: Enable docker auth
       run: |-     
         gcloud --quiet auth configure-docker
@@ -63,13 +68,14 @@ jobs:
       run: |-
         export RENDERER_SERVICE_URL=""
         if gcloud run services list --platform managed | grep renderer | awk '{print $4}' ;then RENDERER_SERVICE_URL=$(gcloud run services list --platform managed | grep renderer | awk '{print $4}');fi
+        echo $CREATE_SA
          terraform plan \
           -var="project_id=$PROJECT_ID" \
           -var="region=$RUN_REGION" \
           -var="service_name=$REPO_NAME" \
           -var="docker_image=gcr.io/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA" \
           -var="port=80" \
-          -var="create_sa=false" \
+          -var="create_sa=$CREATE_SA" \
           -var='gcp_service_list=["iam.googleapis.com","dataflow.googleapis.com","run.googleapis.com"]' \
           -var="cloudrun_service_account=cloudrun-identity@$PROJECT_ID.iam.gserviceaccount.com" \
           -var="invoker_member=allUsers" \
