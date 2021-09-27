@@ -122,7 +122,7 @@ variable "vendor_service" {
 
 variable "create_sa" {
   description = "create service account for cloud"
-  type        = boolean
+  type        = bool
   default     = true
 }
 
